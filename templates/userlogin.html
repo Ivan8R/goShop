@@ -1,0 +1,72 @@
+<html>
+ <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foundation | Welcome</title>
+	
+    <link rel="stylesheet" href="/css/foundation.css"/>
+    <script src="/js/vendor/modernizr.js"></script>
+  </head>
+
+  <body class="row">
+        <div class="row">
+		 
+            
+  
+		</div>
+<hr>
+	<form method="POST" data-abide action="/loginuser">
+	<div class="row" style="margin-top:25px;"> 
+     <div class="large-7 small-centered left">
+     <div class="row">
+      <large class="text-center small-13 columns" style="color:red">{{.errormessage}} </large>
+        <div class="large-7 columns">
+          <label for="right-label" class="right inline">Enter your e-mail address</label>
+        </div>
+        <div class="large-5 columns">
+          <input type="text" name="email">
+        </div>
+      </div>
+      <div class="row">
+    <div class="large-5 columns right">
+    <input type="radio" name="RegistredUserorNot" value="NO" onclick="Password.disabled=true"/><label class="inline">I am a new customer.</br>
+    <small>(You'll create a password later)</small></label>
+    </div>
+    </div>
+    <div class="row">
+    <div class="large-5 columns right">
+    <input type="radio" name="RegistredUserorNot" value="YES"  onclick="Password.disabled=false"/><label> I am a returning customer,</br>and my password is:</label>
+    </div>
+    </div>
+    <div class="row">
+    <div class="large-5 columns right">
+    <input type="password" name="Password" id="Password" size="1" disabled="disabled"/>
+    </div>
+    </div>
+    <div class="row">
+    <div class="large-5 columns right">
+    <button class="button postfix">Sign in using our secure server </button>
+    </div>
+    </div>
+</form>
+</div>
+	</div>
+ 
+<script src="/js/vendor/jquery.js"></script>
+<script src="/js/vendor/fastclick.js"></script> 
+<script src="/js/foundation.min.js"></script>
+
+
+
+
+
+<script language="javascript">
+$(document).foundation();
+
+
+
+
+</script>
+   
+  </body>
+</html>

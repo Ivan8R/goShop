@@ -1,0 +1,69 @@
+<html>
+ <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foundation | Welcome</title>
+	
+    <link rel="stylesheet" href="/css/foundation.css"/>
+    <script src="/js/vendor/modernizr.js"></script>
+  </head>
+
+  <body class="row">
+        <div class="row">
+		 
+            
+  
+		</div>
+<hr>
+
+<div class="row">
+<div class="large-12 columns">Review your order</div>
+<div class="large-12 columns">
+<div class="panel radius large-8 columns left">
+<div class="large-6 left" style="margin-bottom:25px;"><label style="font-weight: bold;">Shipping method</label>{{with .shippingOpt}}{{.}}{{end}}</div>
+<div class="large-6 right" style="margin-bottom:25px;"><label style="font-weight: bold;">Payment method</label>{{with .Paymethod}}{{.}}{{end}}</div>
+
+<div class="large-6  left"><label style="font-weight: bold;">Shipping address</label>{{with .Shippingadress}}{{.FullName}},</br> {{.AddressLine1 }}{{.AddressLine2}}, {{.City}}, {{.StateProvinceRegion}}, {{.ZIP}}, {{.Country}},</br> Phone:{{.PhoneNumber}}{{end}}</div>
+
+<div class="large-6  right"><label style="font-weight: bold;">Billing address</label>{{with .Billingadress}}{{.FullName}},</br> {{.AddressLine1 }}{{.AddressLine2}}, {{.City}}, {{.StateProvinceRegion}}, {{.ZIP}}, {{.Country}},</br> Phone:{{.PhoneNumber}}{{end}}</div>
+
+
+</div>
+<div class="panel callout radius large-3 columns right">
+<form method="POST" data-abide action="/buy">
+<button class="button tiny radius large-12">Place your order</button>
+</form>
+<label style="font-weight: bold;">Order Summary</label>
+<div class="large-12"><label class="left">Items:</label><label class="right">$279.99</label></div>
+<div class="large-12"><label class="left">Shipping & handling:</label><label class="right">0</label></div>
+<hr>
+<hr>
+<div class="large-12 alert"><label class="left" style="color: red;">Order total:</label><label class="right" style="color: red;">$286.47</label></div>
+</div>
+<div class="panel radius large-8 columns left">
+Products here
+</div>
+
+</div>
+</div>
+<hr>
+
+<hr>
+<script src="/js/vendor/jquery.js"></script>
+<script src="/js/vendor/fastclick.js"></script> 
+<script src="/js/foundation.min.js"></script>
+
+
+
+
+
+<script language="javascript">
+$(document).foundation();
+
+
+
+
+</script>
+   
+  </body>
+</html>

@@ -1,0 +1,112 @@
+<html>
+ <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foundation | Welcome</title>
+	
+    <link rel="stylesheet" href="/css/foundation.css" />
+    <link rel="stylesheet" href="/foundation-icons.css" />
+   <script src="http://code.jquery.com/jquery-latest.js"></script>
+   
+  </head>
+
+  <body class="row">
+   <div class="large-12 small-centered columns">
+   
+    <h2 class="text-center">Admin panel - Orders</h2>
+   
+
+   <nav class="breadcrumbs">
+      <a href="admin">DASHBOARD</a>
+      <a href="items">ITEMS</a>
+      <a href="orders">ORDERS</a>
+	  <a href="clients">CLIENTS</a>
+	  <a href="options">OPTIONS</a>
+	 <a href="logout" class="right">LOGOUT</a>
+      
+  
+
+   </nav>
+ 
+<table style="margin-top:25px;">
+  <thead>
+    <tr >
+      <th width="50" class="text-center">Status</th>
+      <th width="70" class="text-center">Order Number</th>
+      <th width="100" class="text-center">Billing</th>
+      <th width="100" class="text-center">Shipping</th>
+      <th width="25" class="text-center">Order Total</th>
+      <th width="25" class="text-center">N</th>
+      <th width="75" class="text-center">Date</th>
+      <th width="40" class="text-center">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  {{with .Orders}}
+     {{range .}}
+    <tr>
+      <td>  {{.Status}}  </td>
+      <td><span style="font-weight: bold;">{{.OrderNumber}}</span></br> {{ with .Customer}}made by {{.Name}}</br>tel. {{.Phone}}</br>email: {{.Email}} {{end}}</td>
+      <td>
+          {{with .BillingAdress}}
+
+  <ul class="vcard" style="font-size:14px; border: none;">
+  <li class="street-address">{{.AddressLine1 }} </li>
+  <li class="street-address">{{.AddressLine2}} </li>
+  <li class="locality">{{.City}}</li>
+  <li><span class="state">{{.StateProvinceRegion}}</span>, <span class="zip">{{.ZIP}}</span></li>
+  <li class="locality">{{.Country}}</li>
+  {{end}}</td>
+      </td>
+      <td>
+      {{with .ShippingAdress}}
+
+  <ul class="vcard" style="font-size:14px; border: none;">
+  <li class="street-address">{{.AddressLine1 }} </li>
+  <li class="street-address">{{.AddressLine2}} </li>
+  <li class="locality">{{.City}}</li>
+  <li><span class="state">{{.StateProvinceRegion}}</span>, <span class="zip">{{.ZIP}}</span></li>
+  <li class="locality">{{.Country}}</li>
+  {{end}}</td>
+      <td>{{.Total}}</td>
+      <td>N</td>
+      <td>{{.Date}}</td>
+
+      <td style="font-size: 28px;" class="text-center">
+      <a href="#"><i class="step fi-check size-36"></i></a></br>
+      <a href="#"><i class="step fi-upload size-36"></i></a></br>
+      <a href="#"><i class="step fi-info size-36"></i></a></br>
+      <a href="#"><i class="step fi-eye size-36"></i></a></br>
+      </td>
+    </tr>
+    {{end}}
+   {{end}}
+  </tbody>
+</table>
+  
+
+
+  {{.Date}}
+
+  {{.CartOrderd}}
+  {{.ShippingAdress}} 
+  {{.BillingAdress}}  
+  {{.Shipping}}       
+  {{.PaymentMethod}}  
+  {{.OrdersNote}}     
+  {{.Status}}        
+  {{.Total}}          
+ 
+	
+	
+<script src="/js/vendor/jquery.js"></script>
+<script src="/js/vendor/fastclick.js"></script> 
+<script src="/js/foundation.min.js"></script>
+
+<script language="javascript">
+  $(document).foundation();
+</script>	
+
+   </div>
+  </body>
+</html>

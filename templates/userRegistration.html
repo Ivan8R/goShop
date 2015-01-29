@@ -1,0 +1,106 @@
+<html>
+ <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foundation | Welcome</title>
+	
+    <link rel="stylesheet" href="/css/foundation.css"/>
+    <script src="/js/vendor/modernizr.js"></script>
+  </head>
+
+  <body class="row">
+        <div class="row">
+		 
+            
+  
+		</div>
+<hr>
+	<form method="POST" data-abide action="/registrationuser">
+  <div class="row" style="margin-top:25px;"> 
+     <div class="large-6 columns panel callout radius small-centered">
+       <div class="row">Registration </br>New to myshop.com? Register Below.</div>
+       <div class="row">
+          <large class="text-center small-13 columns" style="color:red">{{.errormessage}} </large>
+        <div class="small-5 columns">
+          <label for="right-label" class="right inline" style="font-weight: bold;">My name is:</label>
+        </div>
+        <div class="small-6 columns left">
+          <input type="text" name="Name" id="right-label" value="{{.name}}" required>
+          <small class="error">Please enter your Name</small>
+        </div>
+     </div>
+     <div class="row">
+        <div class="small-5 columns">
+          <label for="right-label" class="right inline" style="font-weight: bold;">My e-mail address is:</label>
+        </div>
+        <div class="small-6 columns left">
+          <input type="email" id="right-label" value="{{.email}}" name="Email" required>
+          <small class="error">Please enter valid email</small>
+        </div>
+     </div>
+     <div class="row">
+        <div class="small-5 columns">
+          <label for="right-label" class="right inline" style="font-weight: bold;">Type it again:</label>
+        </div>
+        <div class="small-6 columns left">
+          <input type="email" id="right-label" name="Repeatemail" value="{{.repeatemail}}" required>
+          <small class="error">Please enter valid email</small>
+        </div>
+     </div>
+     <div class="row">
+        <div class="small-5 columns">
+          <label for="right-label" class="right inline price" style="font-weight: bold;">My mobile phone number is:</label>
+        </div>
+        <div class="small-6 columns left">
+          <input type="text" id="right-label" name="Mobilephone" value="{{.mobilephone}}" required>
+          <small class="error">Please enter valid phone</small>
+        </div>
+     </div>
+
+     
+     <div class="row alert">Protect your information with a password</br>This will be your only myshop.com password.</div>
+     <div class="row">
+        <div class="small-5 columns">
+          <label for="right-label" class="right inline" style="font-weight: bold;">Enter a new password:</label>
+        </div>
+        <div class="small-6 columns left">
+          <input type="password" id="right-label" name="Password" required>
+          <small class="error">Please enter password</small>
+        </div>
+     </div>
+     <div class="row">
+        <div class="small-5 columns">
+          <label for="right-label" class="right inline" style="font-weight: bold;">Type it again:</label>
+
+        </div>
+        <div class="small-6 columns left">
+          <input type="password" id="right-label" name="Repeatpassword" required>
+          <small class="error">Please reapeat password</small>
+        </div>
+     </div>
+    <div class="row">
+      <div class="small-5 columns small-centered">
+      <button class="button postfix">Create account</button>
+      </div>
+    </div>
+    </div>
+ </div>
+ </form>
+<script src="/js/vendor/jquery.js"></script>
+<script src="/js/vendor/fastclick.js"></script> 
+<script src="/js/foundation.min.js"></script>
+
+
+
+
+
+<script language="javascript">
+$(document).foundation();
+
+
+
+
+</script>
+   
+  </body>
+</html>

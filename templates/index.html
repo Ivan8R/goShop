@@ -1,0 +1,93 @@
+<html>
+ <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foundation | Welcome</title>
+	
+    <link rel="stylesheet" href="/css/foundation.css"/>
+    <script src="/js/vendor/modernizr.js"></script>
+  </head>
+
+  <body class="row">
+        <div class="row">
+		 
+             <nav class="top-bar" data-topbar role="navigation" data-options="sticky_on: large" >
+			    <ul class="title-area">
+                     <li class="name"><h1><a href="/">My Site</a></h1></li>
+     
+                </ul>
+
+			    <section class="top-bar-section">
+			      <ul class="left">
+				    <li><a href="youraccount">Your Account</a></li>
+                  </ul>
+				</section>
+				<section class="top-bar-section">
+                   <ul class="right">
+                   
+                     <li class="has-dropdown"><a href="cart">Cart</a>
+                       <ul class="dropdown">
+                        <li><div  style="color:white;">asljflkasjflkajsf</div></li>
+                    
+                      </ul>
+                    </li>
+                  </ul>
+              </section>
+            </nav>
+  
+		</div>
+
+	
+	<div class="row" style="margin-top:25px;">   
+	    {{with .Products}}
+	       {{range .}}
+		<div class="large-4 left">
+        <ul class="pricing-table" style="margin-left:25px; margin-right:25px;">
+        <li class="title">{{.Title}}</li>
+        <li class="bullet-item" style="height:250px;">
+        {{if index .Image 0}}
+		     <img src="/uploadimages/{{.SKU}}/{{index .Image 0}}.jpg" alt="ProductImage{{index .Image 0}}" style="width: 225px; height: 225px">
+	    
+		{{end}}
+        </li>
+       <li class="price">{{.Price}}</li>
+	  <form action="/buy-box" method="GET">
+	   <li class="quantity bullet-item">
+	    <div clas="row"> 
+		 <div class="small-4 columns large-centered">
+          <input type="number" placeholder="small-6 text-center" name="prodcutQuantity{{.SKU}}" min="0" value="1" style="width:50px;margin:0px;"/>
+		      <input type="hidden" name="SKU" value="{{.SKU}}">
+		 </div>
+       </div>
+	
+	    </li>
+       <li class="description bullet-item">{{.Description}}</li>
+       <li class="cta-button"><button class="{{.SKU}} button itemadd radius">Add to cart</button></li>
+	
+	   </form>
+       </ul>
+	   </div>
+	
+ 
+	      {{end}}
+       {{end}}
+	</div>
+ 
+<script src="/js/vendor/jquery.js"></script>
+<script src="/js/vendor/fastclick.js"></script> 
+<script src="/js/foundation.min.js"></script>
+
+
+
+
+
+<script language="javascript">
+$(document).foundation();
+
+
+
+
+</script>
+   
+  </body>
+</html>

@@ -1,0 +1,56 @@
+<html>
+ <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foundation | Welcome</title>
+	
+    <link rel="stylesheet" href="/css/foundation.css"/>
+    <script src="/js/vendor/modernizr.js"></script>
+  </head>
+
+  <body class="row">
+   <div class="small-3 small-centered columns">
+   
+    <h2 class="text-center">Login</h2>
+   
+
+<form method="POST" data-abide action="/admin">
+<div class="row" >
+  <div class="row collapse">
+      <div class="large-12 columns">
+    
+         <large class="text-center small-13 columns" style="color:red">{{.errormessage}} </large>
+	  
+       
+	    <div class="small-13 columns">
+		
+          <input type="text" placeholder="Email" class="email" name="Login" required pattern="[a-zA-Z]+"/>
+
+        </div>
+		
+		
+        <div class="small-9 columns">
+          <input type="password" placeholder="Password" class="password" name="Password" required pattern="^[a-zA-Z0-9]+$" />
+        </div>
+		
+          <div class="small-3 columns">
+		    <button class="button postfix">Login</button>
+          </div>
+	 </div>
+		
+	</div>
+ </div>
+</form>
+
+
+
+
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="/js/main.js"></script>
+	
+	
+	
+
+   </div>
+  </body>
+</html>

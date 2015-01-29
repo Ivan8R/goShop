@@ -1,0 +1,66 @@
+<html>
+ <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foundation | Welcome</title>
+	
+    <link rel="stylesheet" href="/css/foundation.css"/>
+    <script src="/js/vendor/modernizr.js"></script>
+  </head>
+
+  <body class="row">
+        <div class="row">
+		 
+            
+  
+		</div>
+
+<div class="row">
+<div class="large-12 columns">
+<hr>
+  Choose your shipping options
+<form method="POST" data-abide action="/shipoptionselect">
+    <button class="button tiny radius small-3 right">Continue</button>
+  </div>
+</div>
+<hr>
+<div class="row">
+<div class="large-5 columns left">
+<label class="info">Shipping to: {{with .adress}}{{.FullName}}, {{.AddressLine1 }} {{.AddressLine2}}, {{.City}}, {{.StateProvinceRegion}}, {{.ZIP}}, {{.Country}}, {{.PhoneNumber}}{{end}}</label>
+<ul class="disc">
+<li>
+Blackberry Porsche Design P'9982 64gb Factory Unlocked in Silver / Dark Platinum P9982 Luxury Mobile Smart Phone Genuine ((2g & 3g 850/900/1900/2100 & 4g Lte 1800/2600/900/800)
+$1,648.99 - Quantity: 1
+Sold by: Mega Mobile
+Change quantities or delete
+</li>
+</ul>
+</div>
+<div class="large-5 columns right">
+<span style="font-weight: bold;">Choose a shipping speed</span></br>
+<input type="radio" name="shippingOfferingId" value="Free shipping" checked="checked"><label class="inline">Free shipping</label></br>
+<input type="radio" name="shippingOfferingId" value="Standard Shipping"><label class="inline">Standard Shipping</label></br>
+</div>
+</div>
+<hr>
+<button class="button tiny radius small-3 right">Continue</button>
+</form>
+<hr>
+<script src="/js/vendor/jquery.js"></script>
+<script src="/js/vendor/fastclick.js"></script> 
+<script src="/js/foundation.min.js"></script>
+
+
+
+
+
+<script language="javascript">
+$(document).foundation();
+
+
+
+
+</script>
+   
+  </body>
+</html>

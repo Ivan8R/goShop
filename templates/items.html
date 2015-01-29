@@ -1,0 +1,184 @@
+<html>
+ <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foundation | Welcome</title>
+	
+    <link rel="stylesheet" href="/css/foundation.css" />
+
+
+	
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+    
+
+  </head>
+
+  <body class="row">
+   <div class="large-12 small-centered columns">
+   
+    <h2 class="text-center">Admin panel - Items</h2>
+   
+
+   <nav class="breadcrumbs">
+      <a href="admin">DASHBOARD</a>
+      <a href="items">ITEMS</a>
+      <a href="orders">ORDERS</a>
+	  <a href="clients">CLIENTS</a>
+	  <a href="options">OPTIONS</a>
+	  <a href="logout" class="right">LOGOUT</a>
+      
+  
+
+   </nav>
+<div class="stack button-group" style="padding-top:25px; ">
+
+<a href="#" data-reveal-id="firstModal" class="button tiny radius">Add Item</a>
+<a href="/items" class="button tiny radius delete">Delete Items</a>
+
+
+</div>
+<table role="grid">
+  <thead>
+    <tr>
+      <th width="15"></th>
+      <th width="250" class="text-center">Product Title</th>
+      <th width="25" class="text-center">Price</th>
+	  <th width="25" class="text-center">SKU</th>
+	  <th width="300" class="text-center">Images</th>
+      <th width="350" class="text-center">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{with .Products}}
+	   {{range .}}
+    <tr>
+      <td width="15"><input name="checkbox" type="checkbox" value="{{.SKU}}" /></td>
+      <td width="250">{{.Title}}</td>
+      <td width="25">{{.Price}}</td>
+	  <td width="25">{{.SKU}}</td>
+	  <td width="300">
+	     
+		{{$imageName := .SKU}}
+		{{range $picture := .Image}}
+   
+		   <img src="/uploadimages/{{ $imageName }}/{{$picture}}.jpg" alt="ProductImage{{$picture}}" style="width: 50px; height: 50px">
+       {{end}}
+		
+	  </td>
+      <td width="350">{{.Description}}</td>
+    </tr>
+	      
+	   {{end}}
+    {{end}}
+
+  </tbody>
+</table>
+
+   
+
+<div id="firstModal" class="reveal-modal" data-reveal action="/additem">
+  <a class="close-reveal-modal">&#215;</a>
+  <form method="POST" enctype="multipart/form-data"  data-abide>
+  <div class="row">
+
+    <div class="large-6 columns">
+      <label>Product Title
+        <input type="text" name="Title" required pattern="[a-zA-Z]+"/>
+      </label>
+	  <small class="error">Title is required and must be a string.</small>
+    </div>
+    <div class="large-2 columns">
+      <label>Product Price
+        <input type="text" name="Price" required pattern="^(\d+|\d+.\d{1,2})$"/>
+      </label>
+	 <small class="error">Price is required and must be a string.</small>
+    </div>
+	<div class="large-4 columns">
+      <label>SKU
+        <input type="text" name="SKU" required pattern="^[+]?\d+"/>
+      </label>
+	 <small class="error">SKU is required and must be a number.</small>
+    </div>
+    
+  </div>
+  <div class="row">
+    <div class="large-6 columns">
+      <label>Product Image
+        <input type="file" name="Image" class="button"/>
+      </label>
+	
+	
+	  </div>
+	<div class="large-6 columns">
+      <label>Product Image
+        <input type="file" name="Image1" class="button"/>
+      </label>
+	
+	
+	  </div>
+  </div>
+ <div class="row">
+
+<div class="large-6 columns">
+<label>Product Image
+        <input type="file" name="Image2" class="button"/>
+      </label>
+	
+	
+	  </div>
+	<div class="large-6 columns">
+      <label>Product Image
+        <input type="file" name="Image3" class="button"/>
+      </label>
+	
+	
+	  </div>
+
+</div>
+
+<div class="row">
+    <div class="large-12 columns">
+      <label>Description
+        <textarea type="text" name="Description" class="Description"></textarea>
+      </label>
+    </div>
+</div>
+<div class="large-2 columns small-centered">
+		    <button class="button radius columns">OK</button>
+
+</div>
+</form>
+</div>
+
+
+
+
+<script src="/js/vendor/jquery.js"></script>
+<script src="/js/vendor/fastclick.js"></script> 
+<script src="/js/foundation.min.js"></script>
+
+
+
+
+<script language="javascript">
+  $(document).foundation();
+
+$( ".delete" ).click(function(event) {
+  event.preventDefault();
+  var myArray = [];
+   $('input[name="checkbox"]:checked').each(function() {
+    myArray.push(this.value);
+   });
+   //console.log($('input[name="checkbox"]:checked').serialize());
+    $.ajax({
+        type: "POST",
+        url: "/productdelete",
+        data: {quq: myArray},
+    })
+
+});
+</script>
+
+   </div>
+  </body>
+</html>

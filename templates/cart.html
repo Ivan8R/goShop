@@ -1,0 +1,135 @@
+<html>
+ <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foundation | Welcome</title>
+	
+    <link rel="stylesheet" href="/css/foundation.css"/>
+    <script src="/js/vendor/modernizr.js"></script>
+    
+  
+  </head>
+
+  <body class="row">
+        <div class="row">
+		 
+             <nav class="top-bar" data-topbar role="navigation" data-options="sticky_on: large" >
+			    <ul class="title-area">
+                     <li class="name"><h1><a href="/">My Site</a></h1></li>
+     
+                </ul>
+
+			    <section class="top-bar-section">
+			      <ul class="left">
+				    <li><a href="#">Left Nav Button</a></li>
+                  </ul>
+				</section>
+				<section class="top-bar-section">
+                   <ul class="right">
+                   
+                     <li class="has-dropdown"><a href="cart">Cart</a>
+                       <ul class="dropdown">
+                        <li><div  style="color:white;">asljflkasjflkajsf</div></li>
+                    
+                      </ul>
+                    </li>
+                  </ul>
+              </section>
+            </nav>
+  
+		</div>
+
+	
+	<div class="row" style="margin-top:25px;">   
+	  
+        <div class="large-8 left">
+          <div class="large-11 columns">
+          <div class="row"> Shopping Cart</div>
+          <div class="row">
+            <table role="grid">
+  <thead>
+    <tr>
+      <th width="150"></th>
+      <th width="350" class="text-center"></th>
+      <th width="25" class="text-center">Price</th>
+      <th width="25" class="text-center">Quantity</th>
+
+    </tr>
+  </thead>
+  <tbody>
+<form class="ajax-cart" method="post">
+{{with .Products}}
+     {{range .}}
+    <tr>
+       {{$Q := .Quantity}}
+      {{with .Product}}
+
+      <td width="150"><img src="/uploadimages/{{.SKU}}/{{index .Image 0}}.jpg" alt="ProductImage{{index .Image 0}}" height="225" width="225"></td>
+      <td width="350">Description</td>
+      <td width="25">{{.Price}}</td>
+       
+      <td width="25" class="skuandandQuantity"><input type="hidden" name="SKU" value="{{.SKU}}"><input type="number" placeholder="small-6 text-center" name="prodcutQuantity" min="0" value="{{$Q}}" style="width:50px;margin:0px;"/></td>
+     
+    </tr>
+  {{end}}
+ {{end}}
+ {{end}}      
+  </form> 
+  </tbody>
+</table>
+          </div>
+          </div>
+        </div>
+        <div class="large-4 columns panel">
+          <div class="large-12 small-centered " style="margin-bottom:15px;">Subtotal ({{.Quantity}} items): ${{.Total}}</div>
+          <div class="large-12 small-centered " style="margin-bottom:15px;">This order contains a gift</div>
+          <a href="/addressselect" class="button tiny radius alert large-12 checkout">Continue</a>
+
+
+        </div>
+
+	</div>
+ 
+
+<script src="/js/vendor/jquery.js"></script>
+<script src="/js/vendor/fastclick.js"></script> 
+<script src="/js/foundation.min.js"></script>
+<script type="text/javascript" src="/js/jquery.json-2.4.js"></script>
+
+
+
+<script language="javascript">
+$(document).foundation();
+$(".checkout").click(function(event) {  
+    event.preventDefault();
+ 
+
+   var myArray = [];
+
+   $(".skuandandQuantity").each(function() {
+    var q = $(this).children('input[name="prodcutQuantity"]').val();
+    var sku = $(this).children('input[name="SKU"]').val();
+    var product = {"SKU": sku, "Quantity":q }
+    myArray.push(product);
+   });
+
+   $.ajax({
+        type: "POST",
+        url: "/checkoutcart",
+        data: {array:$.toJSON(myArray)},
+        dataType: "json",
+      
+   });
+   window.location.href = $(this).attr("href");
+
+
+    
+    
+  
+});
+
+
+</script>
+   
+  </body>
+</html>

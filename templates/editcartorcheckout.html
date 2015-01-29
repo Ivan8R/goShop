@@ -1,0 +1,91 @@
+<html>
+ <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foundation | Welcome</title>
+	
+    <link rel="stylesheet" href="/css/foundation.css"/>
+    <script src="/js/vendor/modernizr.js"></script>
+  </head>
+
+  <body class="row">
+        <div class="row">
+		 
+             <nav class="top-bar" data-topbar role="navigation" data-options="sticky_on: large" >
+			    <ul class="title-area">
+                     <li class="name"><h1><a href="/">My Site</a></h1></li>
+     
+                </ul>
+
+			    <section class="top-bar-section">
+			      <ul class="left">
+				    <li><a href="#">Left Nav Button</a></li>
+                  </ul>
+				</section>
+				<section class="top-bar-section">
+                   <ul class="right">
+                   
+                     <li class="has-dropdown"><a href="cart">Cart</a>
+                       <ul class="dropdown">
+                        <li><div  style="color:white;">asljflkasjflkajsf</div></li>
+                    
+                      </ul>
+                    </li>
+                  </ul>
+              </section>
+            </nav>
+  
+		</div>
+
+	
+<div class="large-12 small-centered columns" style="margin-top:25px;">
+<div class="large-5 columns">
+   1 item added to Cart
+
+   <div class=" large-12 columns" style="margin-top:25px;">
+    	{{with .Product}} 
+	
+        <div class="large-5 columns">
+	
+		   {{if index .Image 0}}
+		     <img src="/uploadimages/{{.SKU}}/{{index .Image 0}}.jpg" alt="ProductImage{{.SKU}}" height="150" width="150">
+		   {{end}}
+		</div>
+		<div class="large-6 columns">
+		   {{.Title}}
+		   {{.Price}}$
+		</div>
+       {{end}}
+   </div>
+
+</div>
+<div class="panel  radius small-7 columns">
+  <div class="small-6 left">
+     Order subtotal:  {{.Total}} $</br>
+     {{.Quantity}} items in your Cart
+
+  </div>
+  <div class="small-6 right">
+     <a href="/cart" class="button tiny radius">Edit your Cart</a>
+	 <a href="/addressselect"  class="button tiny radius alert">Proceed to Checkout</a>
+  </div>
+ 
+</div>
+</div>
+ 
+<script src="/js/vendor/jquery.js"></script>
+<script src="/js/vendor/fastclick.js"></script> 
+<script src="/js/foundation.min.js"></script>
+
+
+
+
+
+<script language="javascript">
+$(document).foundation();
+
+
+</script>
+   
+  </body>
+</html>
