@@ -25,6 +25,10 @@ import (
 var sessionname string = "GOSHOPSESSION"
 var store = sessions.NewCookieStore([]byte("something-very-secret"))
 
+var templatesA = template.Must(template.ParseGlob("./templates/admin/*"))
+
+//var templatesU = template.Must(template.ParseGlob("./templates/theme/*"))
+
 func render(w http.ResponseWriter, tmpl string, context map[string]interface{}) {
 	tmpl_list := []string{fmt.Sprintf("templates/%s.html", tmpl)}
 	t, err := template.ParseFiles(tmpl_list...)
@@ -154,6 +158,21 @@ func dbinit() *r.Session {
 
 }
 
+type Context struct {
+	Db      *r.Session
+	Session *sessions.Session
+}
+
+func NewContext(q *http.Request) (*Context, error) {
+	sess, err := store.Get(q, sessionname)
+	db := dbinit()
+
+	return &Context{
+		Db:      db,
+		Session: sess,
+	}, err
+}
+
 type userLogedIn struct {
 	UserLogin     string
 	IsUserLogedIn bool
@@ -162,6 +181,19 @@ type userLogedIn struct {
 type staffLogedIn struct {
 	UserLogin     string
 	IsUserLogedIn bool
+}
+
+type User struct {
+	Name  string
+	Email string
+	Phone string
+}
+
+type UserRegistration struct {
+	User     User
+	Password string
+	Adresses []Adress
+	Orders   []string
 }
 
 type Adress struct {
@@ -193,19 +225,6 @@ type Order struct {
 	OrdersNote     []string
 	Status         string
 	Total          string
-}
-
-type User struct {
-	Name  string
-	Email string
-	Phone string
-}
-
-type UserRegistration struct {
-	User     User
-	Password string
-	Adresses []Adress
-	Orders   []string
 }
 
 type authUser struct {
@@ -321,17 +340,6 @@ type findproductCart struct {
 	Position  int
 	CartArray ProductsInCart
 	SKU       string
-}
-
-func (p *findproductCart) checkProductinCart() bool {
-	for i, v := range p.CartArray {
-		oneItem := reflect.ValueOf(&v).Elem().Interface().(ProductInCart)
-		if oneItem.SKU == p.SKU {
-			p.Position = i
-			return true
-		}
-	}
-	return false
 }
 
 func (p *findproductCart) total() (int, float64) {
@@ -474,6 +482,7 @@ func main() {
 	rtr.HandleFunc("/productdelete", authstaff(deleteProduct)).Methods("POST")
 
 	rtr.HandleFunc("/orders", authstaff(orders)).Methods("GET")
+	rtr.HandleFunc("/orders/{orderId}", authstaff(getorder)).Methods("GET")
 	rtr.HandleFunc("/clients", authstaff(clients)).Methods("GET")
 	rtr.HandleFunc("/options", authstaff(options)).Methods("GET")
 	rtr.HandleFunc("/logout", authstaff(logout)).Methods("GET")
@@ -495,7 +504,7 @@ func index(w http.ResponseWriter, q *http.Request) {
 		log.Println(err)
 	}
 
-	rows, err := r.Db("goShop").Table("items").Run(ctx.Db)
+	rows, err := r.Db("goShop").Table("items").OrderBy("SKU").Run(ctx.Db)
 
 	if err != nil {
 		log.Println(err)
@@ -516,21 +525,6 @@ func productDetail(w http.ResponseWriter, q *http.Request) {
 
 	SKU := mux.Vars(q)["SKU"]
 	fmt.Println(SKU)
-}
-
-type Context struct {
-	Db      *r.Session
-	Session *sessions.Session
-}
-
-func NewContext(q *http.Request) (*Context, error) {
-	sess, err := store.Get(q, sessionname)
-	db := dbinit()
-
-	return &Context{
-		Db:      db,
-		Session: sess,
-	}, err
 }
 
 func buybox(w http.ResponseWriter, q *http.Request) {
@@ -1076,6 +1070,7 @@ func adminlogin(w http.ResponseWriter, q *http.Request) {
 
 			session.Save(q, w)
 			render(w, "admin", nil)
+			templatesA.ExecuteTemplate(w, "admin", nil)
 		} else {
 			newmap := map[string]interface{}{"metatitle": "Registration", "errormessage": "Wrong login or password"}
 			render(w, "adminlogin", newmap)
@@ -1085,7 +1080,7 @@ func adminlogin(w http.ResponseWriter, q *http.Request) {
 		session, _ := store.Get(q, sessionname)
 		loggedIn := *session.Values["staffLogedIn"].(*staffLogedIn)
 		if loggedIn.IsUserLogedIn == true {
-			render(w, "admin", nil)
+			templatesA.ExecuteTemplate(w, "admin", nil)
 		} else {
 			render(w, "adminlogin", nil)
 		}
@@ -1126,15 +1121,19 @@ func adminornot(w http.ResponseWriter, q *http.Request) {
 }
 
 func items(w http.ResponseWriter, q *http.Request) {
-	db := dbinit()
-	defer db.Close()
 
-	rows, err := r.Db("goShop").Table("items").Run(db)
+	ctx, err := NewContext(q)
+	if err != nil {
+		log.Println(err)
+	}
+
+	rows, err := r.Db("goShop").Table("items").OrderBy("SKU").Run(ctx.Db)
 
 	if err != nil {
 		log.Println(err)
 	}
 	var t []Product
+
 	err = rows.All(&t)
 	if err != nil {
 		log.Println(err)
@@ -1142,7 +1141,7 @@ func items(w http.ResponseWriter, q *http.Request) {
 
 	newmap := map[string]interface{}{"Products": t}
 
-	render(w, "items", newmap)
+	templatesA.ExecuteTemplate(w, "items", newmap)
 
 }
 
@@ -1193,10 +1192,12 @@ func deleteProduct(w http.ResponseWriter, q *http.Request) {
 }
 
 func orders(w http.ResponseWriter, q *http.Request) {
-	db := dbinit()
-	defer db.Close()
+	ctx, err := NewContext(q)
+	if err != nil {
+		log.Println(err)
+	}
 
-	rows, err := r.Db("goShop").Table("orders").Run(db)
+	rows, err := r.Db("goShop").Table("orders").OrderBy(r.Desc("Date")).Run(ctx.Db)
 
 	if err != nil {
 		log.Println(err)
@@ -1209,9 +1210,30 @@ func orders(w http.ResponseWriter, q *http.Request) {
 
 	newmap := map[string]interface{}{"Orders": t}
 
-	render(w, "orders", newmap)
+	templatesA.ExecuteTemplate(w, "orders", newmap)
 
 }
+
+func getorder(w http.ResponseWriter, q *http.Request) {
+
+	orderId := mux.Vars(q)["orderId"]
+
+	ctx, err := NewContext(q)
+	if err != nil {
+		log.Println(err)
+	}
+
+	res, err := r.Db("goShop").Table("orders").Filter(map[string]interface{}{"OrderNumber": orderId}).Run(ctx.Db)
+	if err != nil {
+		log.Println(err)
+	}
+	var order Order
+	res.One(&order)
+
+	newmap := map[string]interface{}{"Order": order}
+	templatesA.ExecuteTemplate(w, "getOrder", newmap)
+}
+
 func clients(w http.ResponseWriter, q *http.Request) {
 	db := dbinit()
 	defer db.Close()
